@@ -1,6 +1,10 @@
 const express = require("express");
+require("./db/config");
+const User = require('./db/config');
 const app = express();
-app.get("/",(req,resp)=>{
-    resp.send("app is working...")
-});
+
+app.post("/register",(req,resp)=>{
+    resp.send("api in progress")
+})
+
 app.listen(5000);
