@@ -13,6 +13,8 @@ app.post("/register", async (req, res) => {
         // Create and save user with ALL received fields
         const newUser = new User(req.body);
         await newUser.save();
+        result = result.toObject();
+        delete result.password
 
         // Send back the exact input data in the response
         res.json(newUser);
@@ -21,7 +23,19 @@ app.post("/register", async (req, res) => {
         res.status(500).json({ message: "Error registering user" });
     }
 });
+app.post("/login", async (req, resp) => {
+    if (req.body.password && req.body.email) {
+        let user = await User.findOne(req.body).select("-password");
+        if (user) {
+            resp.send(user)
+        } else {
+            resp.send({ result: "No User Found" })
+        }
+    } else {
+        resp.send({ result: "No User Found" })
+    }
 
+})
 // Start the server
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
