@@ -66,6 +66,17 @@
   border: solid 1px;
   cursor: pointer;
 }
+.nav-right{
+  text-align: right;
+}
+img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-top: 3px;
+  margin-left: 10px;
+  float: left;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
