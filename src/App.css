@@ -44,7 +44,7 @@
 .App-link {
   color: #61dafb;
 }
-.register{
+.register, .product{
   margin-left: 30%;
 }
 .login{
