@@ -51,6 +51,10 @@ app.get("/products",async(req,resp)=>{
     }
     
 })
+app.delete("/product/:id",async(req,resp)=>{
+    let result =await Product.deleteOne({_id:req.params.id})
+    resp.send(result)
+})
 // Start the server
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
