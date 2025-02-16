@@ -12,6 +12,7 @@ const ProductList = () => {
         try {
             let result = await fetch('http://localhost:5000/products');
             result = await result.json();
+            authorization:JSON.parse(localStorage.getItem('token'))
             setProducts(result);
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -28,13 +29,28 @@ const ProductList = () => {
             }
         } catch (error) {
             console.error("Error deleting product:", error);
-            
         }
+    };
+
+    const searchHandle = async (event) => {
+        let key = event.target.value;
+        if(key){
+        let result= await fetch(`http://localhost:5000/search/${key}`);
+        result = await result.json
+        if(result){
+            setProducts(result)
+        }
+    }else{
+        getProducts();
+    }
     };
 
     return (
         <div className="product-list">
             <h3>Product List</h3>
+            <input type="text" className="search-product-box" placeholder="Search Product"
+                onChange={searchHandle} />
+            
             <ul>
                 <li><strong>S. No.</strong></li>
                 <li><strong>Name</strong></li>
@@ -45,15 +61,16 @@ const ProductList = () => {
 
             {products.length > 0 ? (
                 products.map((item, index) => (
-                    <ul key={item._id}> {/* Changed key from index to item._id */}
+                    <ul key={item._id}>
                         <li>{index + 1}</li>
                         <li>{item.name}</li>
                         <li>{item.price}</li>
                         <li>{item.category}</li>
-                        <li><button onClick={() => deleteProduct(item._id)}>Delete</button>
-                        <Link to={"/update/"+item._id}>Update</Link></li>
+                        <li>
+                            <button onClick={() => deleteProduct(item._id)}>Delete</button>
+                            <Link to={"/update/" + item._id}>Update</Link>
+                        </li>
                     </ul>
-
                 ))
             ) : (
                 <p>No products found</p>
